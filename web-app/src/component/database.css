@@ -1,0 +1,57 @@
+.databaseContainer {
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);  */
+    border-radius: 5px; 
+    /* color: white; */
+    /* border: 2px solid white; */
+    width: 60vw; 
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.databaseContainer h3{
+    font-size: 1.5em;
+}
+
+.databaseContainer button{
+    margin: 20px;
+}
+
+.databaseTable th {
+    position: relative;
+    width: 160px;
+    padding: 15px;
+    margin: 10px 10px;
+    outline: none;
+  
+    font-size: 1em;
+    /* color: #ffffff; */
+    background-color: #336ca6;
+    border: none;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.databaseTable td {
+    border-spacing: 10px 10px;
+    border: none;
+    padding-left: 10px;
+
+    /* color: #ffffff; */
+    border: 1px solid white;
+    border-radius: 6px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.databaseTable button#participantButton {
+    background-color: #ffffff;
+    color:  rgb(17, 30, 53);
+}
+
+.databaseTable button#participantButton:hover {
+    text-decoration: underline;
+}

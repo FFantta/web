@@ -1,0 +1,40 @@
+.mainContainerStudy {
+    flex-direction: column;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: fit-content;
+    padding: 70 70;
+}
+
+.titleContainerStudy {
+    display: flex;
+    flex-direction: column;
+    font-size: 48px;
+    font-weight: bolder;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /* color: white; */
+}
+
+.tableAndButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding:  0px 30px;
+}
+
+.buttons button {
+    background-color: #336ca6;
+    margin: 10px;
+}
+
+.buttons button:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,105 @@
+.light-theme {
+    background-color: rgb(245, 245, 245);
+    color: rgb(17, 30, 53);
+}
+
+.dark-theme {
+    background-color: rgb(17, 30, 53);
+    color: rew;
+}
+
+.theme-selector {
+    margin-bottom: 1rem;
+}
+
+.settings-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    gap: 20px; 
+}
+
+.theme-selector,
+.password-change-form {
+    flex: 1; 
+    min-width: 250px; 
+}
+
+
+.apperance-form,
+.password-change-form {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.theme-selector select,
+.password-change-form input[type="text"],
+.password-change-form input[type="password"] {
+    width: 100%;
+    padding: 0.3rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+.apperance-form label,
+.password-change-form label {
+    display: block;
+    margin-top: 1rem;
+    color: #495057;
+    font-size: 1rem;
+}
+
+.apperance-form h2,
+.password-change-form h2 {
+    margin-bottom: 1rem;
+    color: #007bff;
+    font-size: 1.5rem;
+}
+
+.password-change-form .error-message {
+    color: #dc3545;
+    margin-top: 1rem;
+}
+
+.setting-submit-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.setting-submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.setting-submit-btn:active {
+    background-color: #004085;
+}
+
+
+.light-theme .apperance-form,
+.light-theme .password-change-form {
+    background-color: rgb(245, 245, 245);
+    color: rgb(17, 30, 53);
+}
+
+.dark-theme .apperance-form,
+.dark-theme .password-change-form {
+    background-color: rgb(17, 30, 53);
+    color: rgb(245, 245, 245); 
+}
+
+.dark-theme .apperance-form label,
+.dark-theme .password-change-form label {
+    color: rgb(245, 245, 245); 
+}
