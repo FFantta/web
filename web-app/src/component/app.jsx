@@ -6,32 +6,36 @@ import Register from './content/register';
 import Login from './content/login';
 import Setting from './content/setting';
 import StudyHome from './content/studyhome';
-import Participant from './content/participant';
+import ParticipantWrapper from './content/ParticipantWrapper'; 
 import './content/setting.css';
-// import './content/register.css';
 
+/**
+ * The app component which shows different pages depending of the URL route given.
+ * @returns - the main app component.
+ */
 const App = () => {
-    const location = useLocation(); 
+  const location = useLocation();
+  
+  // shows navBar when the login page is not the current page
+  const showNavBar = location.pathname !== '/login' && location.pathname !== '/';
 
-    const showNavBar = location.pathname !== '/login' && location.pathname !== '/';
-
-    return (
-        <React.Fragment>
-            {showNavBar && <NavBar />}
-            <div className='container'>
-                <Routes>
-                    <Route path='/' element={<Login />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
-                    <Route path='/setting' element={<Setting />} />
-                    <Route path='/notFound' element={<NotFound />} />
-                    <Route path='/studyHome' element={<StudyHome />} />
-                    <Route path='/participant' element={<Participant />} />
-                    <Route path='*' element={<Navigate replace to='/notFound' />} />
-                </Routes>
-            </div>
-        </React.Fragment>
-    );
+  return (
+    <>
+      {showNavBar && <NavBar />}
+      <div className='container'>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/setting' element={<Setting />} />
+          <Route path='/notFound' element={<NotFound />} />
+          <Route path='/studyHome' element={<StudyHome />} />
+          <Route path='/participant' element={<ParticipantWrapper />} />
+          <Route path='*' element={<Navigate replace to='/notFound' />} />
+        </Routes>
+      </div>
+    </>
+  );
 };
 
 export default App;

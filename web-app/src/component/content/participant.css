@@ -5,16 +5,41 @@
     justify-content: flex-start;
     height: fit-content;
     padding: 70 70;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .titleContainerParticipant {
     display: flex;
-    flex-direction: column;
-    font-size: 48px;
+    flex-direction: row;
+    align-items: center;
+    font-size: 24px;
+    color: #444;
+    background-color: #e8e8e8;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 0px;
     font-weight: bolder;
-    align-items: flex-start;
-    justify-content: flex-start;
-    color: white;
+    gap: 20px; 
+}
+
+.goBackButton {
+    cursor: pointer;
+}
+
+
+.mainContainerParticipant h1 {
+    font-size: 36px; 
+    font-weight: bolder;
+    color: #444;
+    background-color: #e8e8e8;
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .entriesAndButtons {
@@ -25,9 +50,10 @@
 
 .buttons {
     display: flex;
+    flex: 0 0 20%;
     flex-direction: column;
     justify-content: flex-end;
-    padding:  0px 30px;
+    padding:  0px 20px;
 }
 
 .buttons button {
@@ -36,6 +62,30 @@
 }
 
 .buttons button:hover {
+    text-decoration: underline;
+}
+
+.par-buttons {
+    display: flex;
+    flex: 0 0 20%;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0px 10px;
+}
+
+.par-buttons button {
+    background-color: #336ca6;
+    margin: 5px; 
+    padding: 5px 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+}
+
+.par-buttons button:hover {
     text-decoration: underline;
 }
 
@@ -51,7 +101,28 @@ h2 {
     column-count: 2;
 }
 
-.tagList li {
-    font-style: italic;
-    width: auto;
+.tagList {
+    list-style: none;
+    column-count: 2;
+    max-height: 80px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.scroll-hint {
+    text-align: right;
+    margin-right: 10px;
+    color: #c0c0c0;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .mainContainerParticipant h1 {
+        font-size: 1.5em; 
+    }
+    .titleContainerParticipant {
+        font-size: 1em;
+    }
 }

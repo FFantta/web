@@ -3,11 +3,20 @@ import { AgChartsReact } from 'ag-charts-react';
 import { supabase } from '../../supabaseClient'; 
 import './scatterChartStyle.css';
 
+/**
+ * A component for the 2D visualisation of data entries in the database. It visualises the X coordiantes and Y coordinates.
+ * @param {string} currentStudy - the name of the current study.
+ * @param {number} currentParticipant - the ID of the current participant. 
+ * @returns - a 2D scatter chart of the given data.
+ */
 const ScatterChart = ({ currentStudy, currentParticipant }) => {
   const [chartData, setChartData] = useState([]);
   const [error, setError] = useState(null); 
 
   useEffect(() => {
+    /**
+     * Fetches the study data or participant data from the backend, depending on which one is needed.
+     */
     const fetchData = async () => {
       if (!currentStudy || currentStudy === 'No Study Selected') {
         setChartData([]);
@@ -65,11 +74,15 @@ const ScatterChart = ({ currentStudy, currentParticipant }) => {
         type: 'number',
         position: 'bottom',
         title: { text: 'X Coordinate' },
+        min: -100,
+        max: 100,
       },
       {
         type: 'number',
         position: 'left',
         title: { text: 'Y Coordinate' },
+        min: -100,
+        max: 100,
       },
     ],
     legend: { enabled: false },
@@ -85,7 +98,7 @@ const ScatterChart = ({ currentStudy, currentParticipant }) => {
     return <div>Error loading chart: {error.message}</div>; 
   }
 
-  return <AgChartsReact options={options} />;
+  return <AgChartsReact options={options} style={{ width: '100%', height: '500px' }} />;
 };
 
 export default ScatterChart;

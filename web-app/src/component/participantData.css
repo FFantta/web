@@ -1,11 +1,9 @@
 .entryTableContainer {
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);  */
-    border-radius: 5px; 
-    color: white;
-    /* border: 2px solid white; */
-    width: 60vw; 
-    height: fit-content;
+    width: 58vw; 
+    max-height: 60vh; 
+    overflow-y: auto;
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
 }
@@ -19,9 +17,15 @@
 }
 
 .entryTable th {
-    position: relative;
-    width: 180px;
-    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    white-space: nowrap;
+    
+    position: sticky;
+    top: 0;
+    text-align: center;
+    width: 20%;
+    padding: 10px 15px;
     margin: 10px 10px;
     outline: none;
   
@@ -29,7 +33,6 @@
     color: #ffffff;
     background-color: #336ca6;
     border: none;
-    border-radius: 6px;
     white-space: nowrap;
 }
 
@@ -37,9 +40,9 @@
     border-spacing: 10px 10px;
     border: none;
     padding: 12px 12px;
+    text-align: center;
 
-    color: #ffffff;
-    border: 1px solid white;
+    border: 1.5px solid #336ca6;
     border-radius: 6px;
     border-top: none;
     border-left: none;
@@ -54,3 +57,4 @@
 .entryTable button#participantButton:hover {
     text-decoration: underline;
 }
+

@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { getStudyData } from '../../supabaseClient'; 
 
+/**
+ * A component for the 3D visualisation of data entries in the database. It visualises the X coordiantes, Y coordinates and timestamp.
+ * @param {string} currentStudy - the name of the current study.
+ * @param {number} currentParticipant - the ID of the current participant. 
+ * @returns - a 3D scatter chart of the given data.
+ */
 const ScatterChart3D = ({ currentStudy, currentParticipant}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    /**
+     * Fetches the study data or participant data from the backend, depending on which one is needed.
+     */
     const fetchData = async () => {
       let studyData = await getStudyData(currentStudy);
       
@@ -21,7 +30,7 @@ const ScatterChart3D = ({ currentStudy, currentParticipant}) => {
           mode: 'markers',
           type: 'scatter3d',
           marker: {
-            size: 3,
+            size: 6,
             opacity: 0.6
           }
         };
@@ -32,13 +41,12 @@ const ScatterChart3D = ({ currentStudy, currentParticipant}) => {
     fetchData();
   }, [currentStudy, currentParticipant]);
   
-
   const layout = {
     autosize: true,
     title: '3D Scatter Chart',
     scene: {
-      xaxis: { title: 'X Axis', range: [-100, 100] },
-      yaxis: { title: 'Y Axis', range: [-100, 100] },
+      xaxis: { title: 'X Coordinate', range: [-100, 100] },
+      yaxis: { title: 'Y Coordinate', range: [-100, 100] },
       zaxis: { 
         title: 'Time', 
         type: 'date', 
@@ -53,10 +61,8 @@ const ScatterChart3D = ({ currentStudy, currentParticipant}) => {
       aspectmode: 'manual'
     },
   };
-  
-  
 
-  return <Plot data={data} layout={layout} />;
+  return <Plot data={data} layout={layout} style={{ width: '100%', height: '600px' }} />;
 };
 
 export default ScatterChart3D;

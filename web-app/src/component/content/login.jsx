@@ -6,6 +6,9 @@ import {checkAdminCredentials} from '../../supabaseClient.js';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './authContext';
 
+/**
+ * This component acts as the login page which the user sees when they initially land on the website.
+ */
 class Login extends Component {
     state = {
         adminId: '',
@@ -14,10 +17,19 @@ class Login extends Component {
         passwordError: '',
     };
 
+    /**
+     * Handles changes in the text fields and keep the associted variables updated.
+     * @param {Event} e - an event object
+     */
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value, [`${e.target.name}Error`]: '' });
     };
 
+    /**
+     * Allows the user to log in to the webiste when valid credentials are entered.
+     * @param {Event} e - an event object.
+     * @returns - and error message if there is an issue with the input, otherwise it takes the user to the study home page.
+     */
     handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -82,6 +94,11 @@ class Login extends Component {
     }
 }
 
+/**
+ * A function which wraps a component, allowing the navigate and auth variables to be included when it is exported/used.
+ * @param {Component} Component - the target component to be exported with hooks.
+ * @returns - the wrapped component with the navigate and auth varibales.
+ */
 function withHook(Component) {
     return function WrappedComponent(props) {
         const navigate = useNavigate();

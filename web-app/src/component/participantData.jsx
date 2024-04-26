@@ -5,20 +5,38 @@ import './participantData.css';
 
 export let currentStudy = null;
 
-export async function setCurrentStudy(num) {
-    currentStudy = num;
+/**
+ * Sets the name of the current study (which changes throughout the use of the program) to ensure the correct data is fetched.
+ * @param {string} name 
+ */
+export async function setCurrentStudy(name) {
+    currentStudy = name;
 }
 
+/**
+ * A getter for the current selected study.
+ * @returns the name of the study that is currently selected.
+ */
 export function getCurrentStudy() {
     return currentStudy;
 }
 
 // forwardRef passes a reference down to child (ParticipantData)
+
+/**
+ * A participant data component which shows all the data in the database for a given participant in a given study.
+ * @param {number} currentParticipant - the ID of the current participant.
+ * @param {Ref} ref - a forwarded reference that can be passed down to a child, the child being ParticipantData.
+ * @returns - the data entries for a given participant in a given study.
+ */
 const ParticipantData = forwardRef(({ currentParticipant }, ref) => {
     const [participantData, setParticipantData] = useState(null);
 
     // runs function getParticipantData whenever currentParticipant changes
     useEffect(() => {
+        /**
+         * Fetches participant data from the database and sets it in the participantData variable.
+         */
         const getParticipantData = async () => {
             const d = await renderParticipantDatabase(currentStudy, currentParticipant);
             setParticipantData(d);

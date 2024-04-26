@@ -4,11 +4,19 @@ import { setCurrentStudy } from './participantData';
 import SearchBar from './searchBar';
 import './database.css';
 
+/**
+ * A database component which gets all the data in the database for a given study.
+ * @param {string} currentStudy - the name of the current study.
+ * @returns - the data entries for a given study.
+ */
 const Database = ({currentStudy}) => {
     // study data initialisation
     const [studyData, setStudyData] = useState(null);
 
     useEffect(() => {
+        /**
+         * Gets the data entries of a study from the database and sets it in the studyData variable.
+         */
         const getStudyData = async () => {
             const d = await renderStudyDatabase(currentStudy);
             setStudyData(d);
@@ -33,12 +41,16 @@ const Database = ({currentStudy}) => {
     else {
         setCurrentStudy(currentStudy);
 
-        return(
-            <div className='databaseContainer'>
-                <SearchBar currentStudy={currentStudy} setStudyData={setStudyData} />
-                <br></br>
-                {studyData !== null ? studyData : <h3>Loading...</h3>}
-            </div>  
+        return (
+            <>
+                <div className="searchBarContainer">
+                    <SearchBar currentStudy={currentStudy} setStudyData={setStudyData} />
+                </div>
+                <div className='databaseContainer'>
+                    {studyData !== null ? studyData : <h3>Loading...</h3>}
+                </div>  
+            </>
+
         );
     }
 }

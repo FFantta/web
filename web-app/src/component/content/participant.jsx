@@ -8,8 +8,13 @@ import './participant.css';
 import '../../index.css';
 import ScatterChart from './ScatterChart';
 import ScatterChart3D from './ScatterChart3D'; 
+import { RiArrowGoBackFill } from 'react-icons/ri';
 
 
+/**
+ * The participant component shows the participant page which allows the user to see and modify the data of a certain participant in a certain study.
+ * The user can create, delete and add tags here. They can also export and visualise the data.
+ */
 class Participant extends Component {
     // creating a reference for ParticipantData component
     constructor(props) {
@@ -20,16 +25,33 @@ class Participant extends Component {
             showChart: false,
             show3DPopup: false,
         };
+        this.handleGoBack = this.handleGoBack.bind(this);
     }
 
+    /**
+     * Navigates the user back to the study home page.
+     */
+    handleGoBack = () => {
+        this.props.navigate('/studyHome', { state: { selectedStudy: getCurrentStudy() } });
+    };
+
+    /**
+     * Shows a 3D visualisation of the data in a pop up window.
+     */
     handleVisualise3d = () => {
         this.setState({ show3DPopup: true }); 
     }
-
+    
+    /**
+     * Shows a 2D visualisation of the data in a pop up window.
+     */
     handleVisualiseData = () => {
         this.setState({ showChart: true });
     }
 
+    /**
+     * Exports the data of the currently selected participant and study to the user's device as a CSV file.
+     */
     handleExport = async () => {
         console.log("click!!");
 
@@ -39,7 +61,7 @@ class Participant extends Component {
         if (study === null || study === '' || pId === null || pId === '') {
             alert('Invalid Participant or Study.');
         } else {
-            const data = await getParticipantData(study,pId);
+            const data = await getParticipantData(study, pId);
             if(data.length > 0){
               
                 const header = Object.keys(data[0]).join(',');
@@ -62,8 +84,11 @@ class Participant extends Component {
         }   
     };
 
-    // function that calls getParticipantData from referenced ParticipantData component
+    /**
+     * Refreshes the data on the page, allowing the user to see any recent updates made.
+     */
     refreshParticipantData = () => {
+        // function that calls getParticipantData from referenced ParticipantData component
         // if reference is valid
         if (this.participantDataRef.current) {
             // call getParticipantData
@@ -71,6 +96,9 @@ class Participant extends Component {
         }
     };
 
+    /**
+     * Handles the user adding a tag to the study.
+     */
     handleCreateTag = async () => {
         let study = getCurrentStudy();
 
@@ -102,6 +130,9 @@ class Participant extends Component {
         }
     };
 
+    /**
+     * Allows the user to delete a tag from the study and from all entries the tag is used on.
+     */
     handleDeleteTag = async () => {
         let study = getCurrentStudy();
 
@@ -133,6 +164,9 @@ class Participant extends Component {
         }
     };
 
+    /**
+     * Adds or updates the tag of an individual data entry.
+     */
     handleTagData = async () => {
         // get current study as variable
         let study = getCurrentStudy();
@@ -194,6 +228,9 @@ class Participant extends Component {
         }
     };
 
+    /**
+     * Removes the tag from an individual data entry.
+     */
     handleRemoveDataTag = async () => {
         // get current study as variable
         let study = getCurrentStudy();
@@ -230,13 +267,17 @@ class Participant extends Component {
 
     };
 
-    // reload tags
+    /**
+     * Loads the available list of tags from the databse into the 'tags' variable.
+     */
     async getTags() {
         let study = getCurrentStudy();
         let tagsData = await renderTags(study);
         this.setState({ tags: tagsData });
     }
-    // fetch tags
+    /**
+     * Fetches available tags from the database once the Participant component has mounted.
+     */
     async componentDidMount() {
         this.getTags();
     }
@@ -248,17 +289,20 @@ class Participant extends Component {
         return (
             <Base>
                 <div className='mainContainerParticipant'>
-                    <div className='titleContainerParticipant'>Participant ID: {selectedParticipant}</div>
-                    <h2>Study: {study}</h2>
+                    <h1>Study: {study}</h1>
+                    <div className='titleContainerParticipant'>
+                        <span>Participant ID: {selectedParticipant}</span>
+                        <RiArrowGoBackFill className="goBackButton" onClick={this.handleGoBack} />
+                    </div>
                     <br></br>
                     <div className='entriesAndButtons'>
                         <ParticipantData currentParticipant = {selectedParticipant} ref={this.participantDataRef}/>
-                        <div className='buttons'>
+                        <div className='par-buttons'>
                             <button onClick={this.handleCreateTag}>Create New Tag</button>
                             <button onClick={this.handleDeleteTag}>Delete Existing Tag</button>
                             <button onClick={this.handleTagData}>Add Tag to DataID</button>
                             <button onClick={this.handleRemoveDataTag}>Remove Tag from DataID</button>
-                            <button onClick={this.handleRefresh}>Refresh Data</button>
+                            {/* <button onClick={this.handleRefresh}>Refresh Data</button> */}
                             <button onClick={this.handleVisualiseData}>Visualise Data</button>
                             {showChart && (
                                 <div className="popup">
@@ -282,7 +326,8 @@ class Participant extends Component {
                             <h2>Available Tags:</h2>
                             <div className='tagList'>
                                 <ul>{tags.length > 0 ? tags : <p>Loading...</p>}</ul>
-                            </div>                            
+                            </div>
+                            <div className="scroll-hint">Swipe to see more →</div>
                         </div>
                     </div>
                 </div>

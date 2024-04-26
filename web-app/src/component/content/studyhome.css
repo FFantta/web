@@ -16,25 +16,72 @@
     justify-content: flex-start;
     /* color: white; */
 }
-
 .tableAndButtons {
-    display: flex;
-    flex-direction: row;
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-between;
     align-items: flex-start;
+    flex-direction: row;
 }
 
-.buttons {
+.databaseContainer {
+    flex: 0 0 80%;
+    overflow-y: auto;
+    max-height: 50vh;    
+}
+
+.home-buttons {
+    flex: 0 0 20%;
+    flex-basis: 150px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding:  0px 30px;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    gap: 10px;
+    height: fit-content;
+    width: auto;
+    position: sticky;
+    top: 0;
 }
 
-.buttons button {
+.home-buttons button {
     background-color: #336ca6;
-    margin: 10px;
+    font-weight: bold;
+  }
+
+.home-buttons button:hover {
+    text-decoration: underline;
 }
 
-.buttons button:hover {
-    text-decoration: underline;
+.databaseTable thead th {
+    position: sticky;
+    top: 0;
+}
+
+@media (max-width: 768px) {
+    .tableAndButtons {
+        flex-direction: column;
+    }
+
+    .home-buttons {
+        order: 1;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+    
+      .home-buttons button {
+        width: 100%;
+      }
+
+    .searchBarContainer {
+        order: 0;
+    }
+
+    .databaseContainer {
+        order: 2;
+    }
 }

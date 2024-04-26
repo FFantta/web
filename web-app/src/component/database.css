@@ -20,27 +20,20 @@
 }
 
 .databaseTable th {
-    position: relative;
-    width: 160px;
-    padding: 15px;
-    margin: 10px 10px;
-    outline: none;
-  
-    font-size: 1em;
-    /* color: #ffffff; */
+    padding: 10px 15px;
     background-color: #336ca6;
-    border: none;
-    border-radius: 6px;
+    border-radius: 10px;
+    text-align: center;
     white-space: nowrap;
+    color: white;
 }
 
 .databaseTable td {
     border-spacing: 10px 10px;
     border: none;
     padding-left: 10px;
-
-    /* color: #ffffff; */
-    border: 1px solid white;
+    text-align: center;
+    border: 1.5px solid #336ca6;
     border-radius: 6px;
     border-top: none;
     border-left: none;
@@ -55,3 +48,13 @@
 .databaseTable button#participantButton:hover {
     text-decoration: underline;
 }
+
+.searchBarContainer {
+    margin-bottom: 20px;
+  }
+
+.databaseTable th:nth-child(1) { width: 20%; font-weight: bolder; }
+.databaseTable th:nth-child(2) { width: 20%; }
+.databaseTable th:nth-child(3) { width: 20%; }
+.databaseTable th:nth-child(4) { width: 20%; }
+.databaseTable th:nth-child(5) { width: 20%; }
