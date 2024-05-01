@@ -71,6 +71,7 @@
     flex-direction: column;
     justify-content: flex-end;
     padding: 0px 10px;
+    width: 20%;
 }
 
 .par-buttons button {
@@ -96,14 +97,10 @@ h2 {
     justify-content: center;
 }
 
-.tagList {
-    list-style: none;
-    column-count: 2;
-}
 
 .tagList {
     list-style: none;
-    column-count: 2;
+    column-count: 1;
     max-height: 80px;
     overflow-y: auto;
     padding-right: 10px;

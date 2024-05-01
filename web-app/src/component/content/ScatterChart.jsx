@@ -43,7 +43,7 @@ const ScatterChart = ({ currentStudy, currentParticipant }) => {
       const formattedData = data.map(d => ({
         x: parseFloat(d.Xcoordinate),
         y: parseFloat(d.Ycoordinate),
-        name: `${d.Tag} (Participant ${d.ParticipantID})`
+        tag: `${d.Tag} (Participant ${d.ParticipantID})`
       }));
 
       setChartData(formattedData);
