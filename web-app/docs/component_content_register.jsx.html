@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: component/content/register.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: component/content/register.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import Base from './base';
+import './register.css';
+import '../../index.css';
+import { checkForAdminRole, insertAdmin, insertStudy } from "../../supabaseClient";
+import { useAuth } from './authContext';
+import './setting.css';
+
+/**
+ * The register component shows the register or create page which allows users to create a new admin (if they have the clearance to) or to create a new study.
+ */
+class Register extends Component {
+    state = {
+        defaultPassword: '',
+        selectedRole: '',
+        studyName: '',
+        roles: ['Admin', 'Moderator', 'User'],
+    };
+
+    /**
+     * Handles changes to the default password text field and keeps the defaultPassword variable updated.
+     * @param {Event}} e - the event object. 
+     */
+    handleDefaultPasswordChange = (e) => {
+        this.setState({ defaultPassword: e.target.value });
+    };
+
+    /**
+     * Handles changes to the selected role and keeps the selectedRole variable updated.
+     * @param {Event} e - the event object.
+     */
+    handleRoleChange = (e) => {
+        this.setState({ selectedRole: e.target.value });
+    };
+
+    /**
+     * Handles changes to the study name text fields and keeps the studyName variable updated.
+     * @param {Event} e - the event object.
+     */
+    handleStudyNameChange = (e) => {
+        this.setState({ studyName: e.target.value });
+    };
+
+    /**
+     * Handles the creation of a new study and inserts it into the database.
+     * @returns - a success message if the new study has been added to the database, and an error message if not.
+     */
+    handleCreateStudy = async () => {
+        const { studyName } = this.state;
+
+        if (studyName.trim() === '') {
+            alert('Please enter a study name');
+            return;
+        }
+
+        try {
+            const insertionResult = await insertStudy(studyName);
+            if (insertionResult) {
+                alert("Study created successfully: " + studyName);
+                this.setState({ studyName: '' });
+  
+            } else {
+                alert('Failed to create study.');
+            }
+        } catch (error) {
+            console.error("Error creating study: ", error);
+            alert('Error creating study.');
+        }
+    };
+
+    /**
+     * Handles the insertion of a new admin into the database. It error checks all input and ensures the user has the clearance to make new admins.
+     * @param {Event} e - the event object.
+     * @returns - a success message and the new admin's ID if the new admin has been added to the database, and an error message if not.
+     */
+    handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const { adminId } = this.props.adminId;
+
+        if (this.state.defaultPassword.trim() === '' || this.state.selectedRole.trim() === '') {
+            alert('Please provide the default password and/or select a role.');
+            return;
+        }
+        const { defaultPassword, selectedRole } = this.state;
+
+        try {
+            const correctRole = await checkForAdminRole(adminId);
+            if (correctRole) {
+                const newAdminID = await insertAdmin(defaultPassword, selectedRole);
+                if (newAdminID) {
+                    // If admin is inserted successfully, set the newAdminID in the state
+                    alert('Admin successfully created! New Admin ID: ' + newAdminID);
+                } else {
+                    alert('Failed to create new admin. Please try again.');
+                }
+            } else {
+                alert('You are not authorised to create new admins.');
+            }
+        } catch (error) {
+            console.error("Error during admin creation:", error);
+            alert('Error during admin creation');
+        }
+    };
+
+    render() {
+        const { defaultPassword, selectedRole, studyName, roles } = this.state;
+        return (
+            &lt;Base>
+                &lt;div className="settings-container">
+                    &lt;div className="form-section"> 
+                        &lt;h2>Create new admin&lt;/h2>
+                        &lt;div> 
+                            &lt;label htmlFor="defaultPassword">Default Password:&lt;/label>
+                            &lt;input
+                                type="password"
+                                id="defaultPassword"
+                                value={defaultPassword}
+                                onChange={this.handleDefaultPasswordChange}
+                                placeholder="Enter default password"
+                            />
+                            &lt;label htmlFor="selectedRole">Role:&lt;/label>
+                            &lt;select
+                                id="selectedRole"
+                                value={selectedRole}
+                                onChange={this.handleRoleChange}
+                            >
+                                &lt;option value="">Select role of new admin&lt;/option>
+                                {roles.map((role, index) => (
+                                    &lt;option key={index} value={role}>{role}&lt;/option>
+                                ))}
+                            &lt;/select>
+                            &lt;button className="setting-submit-btn" onClick={this.handleSubmit}>Create&lt;/button>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div className="form-section"> {/* 移除 apperance-form 类 */}
+                        &lt;h2>Create new study&lt;/h2>
+                        &lt;div> {/* 移除 theme-selector 类 */}
+                            &lt;label htmlFor="studyName">Study Name:&lt;/label>
+                            &lt;input
+                                type="text"
+                                id="studyName"
+                                value={studyName}
+                                onChange={this.handleStudyNameChange}
+                                placeholder="Enter study name"
+                            />
+                            &lt;button className="setting-submit-btn" onClick={this.handleCreateStudy}>Create Study&lt;/button>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/Base>
+        );
+    }
+}
+
+/**
+ * A function which wraps a component, allowing the adminId data to be included when it is exported/used.
+ * @param {Component} Component - the target component to be exported with hooks.
+ * @returns - the wrapped component with the adminId varibales.
+ */
+function withHook(Component) {
+    return function WrappedComponent(props) {
+        const adminId = useAuth(); 
+        return &lt;Component {...props} adminId={adminId}/>;
+    };
+}
+
+export default withHook(Register);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Login.html">Login</a></li><li><a href="NotFound.html">NotFound</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Register.html">Register</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Base">Base</a></li><li><a href="global.html#Database">Database</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#ParticipantData">ParticipantData</a></li><li><a href="global.html#ParticipantWrapper">ParticipantWrapper</a></li><li><a href="global.html#ScatterChart">ScatterChart</a></li><li><a href="global.html#ScatterChart3D">ScatterChart3D</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#StudyDropdown">StudyDropdown</a></li><li><a href="global.html#StudyHome">StudyHome</a></li><li><a href="global.html#ThemeProvider">ThemeProvider</a></li><li><a href="global.html#addTag">addTag</a></li><li><a href="global.html#cascadeDeleteTag">cascadeDeleteTag</a></li><li><a href="global.html#changePassword">changePassword</a></li><li><a href="global.html#checkAdminCredentials">checkAdminCredentials</a></li><li><a href="global.html#checkDataTag">checkDataTag</a></li><li><a href="global.html#checkForAdminRole">checkForAdminRole</a></li><li><a href="global.html#checkStudyData">checkStudyData</a></li><li><a href="global.html#checkStudyExists">checkStudyExists</a></li><li><a href="global.html#checkTagExists">checkTagExists</a></li><li><a href="global.html#deleteTag">deleteTag</a></li><li><a href="global.html#getCurrentStudy">getCurrentStudy</a></li><li><a href="global.html#getParticipantData">getParticipantData</a></li><li><a href="global.html#getStudyData">getStudyData</a></li><li><a href="global.html#insertAdmin">insertAdmin</a></li><li><a href="global.html#insertStudy">insertStudy</a></li><li><a href="global.html#removeTaggedData">removeTaggedData</a></li><li><a href="global.html#renderDropdownStudies">renderDropdownStudies</a></li><li><a href="global.html#renderParticipantDatabase">renderParticipantDatabase</a></li><li><a href="global.html#renderSearchResults">renderSearchResults</a></li><li><a href="global.html#renderStudyDatabase">renderStudyDatabase</a></li><li><a href="global.html#renderTags">renderTags</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#setCurrentStudy">setCurrentStudy</a></li><li><a href="global.html#setSelectedParticipant">setSelectedParticipant</a></li><li><a href="global.html#tagData">tagData</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useTheme">useTheme</a></li><li><a href="global.html#withHook">withHook</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Apr 29 2024 13:07:13 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

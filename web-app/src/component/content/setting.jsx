@@ -38,7 +38,7 @@ const Setting = () => {
         <Base>
         <div className="settings-container">
             <div className="form-section">
-                <h2>Apperance</h2>
+                <h2>Appearance</h2>
                 {/* <div className="theme-selector"> */}
                 <label htmlFor="theme-select">Choose a theme: </label>
                 <select id="theme-select" value={theme} onChange={(e) => toggleTheme(e.target.value)}>

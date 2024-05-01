@@ -46,7 +46,7 @@ const NavBar = () => {
                         to="/studyHome"
                         className={({ isActive }) => (isActive ? 'navbar-brand active' : 'navbar-brand')}
                         >
-                        Studyhome
+                        Study Home
                         </NavLink>
                     </li>
                     <li className="nav-item">
@@ -54,7 +54,7 @@ const NavBar = () => {
                         to="/register"
                         className={({ isActive }) => (isActive ? 'navbar-brand active' : 'navbar-brand')}
                         >
-                        Creatings
+                        Creations
                         </NavLink>
                     </li>
                     <li className="nav-item">

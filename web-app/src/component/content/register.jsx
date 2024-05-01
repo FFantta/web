@@ -133,9 +133,9 @@ class Register extends Component {
                             <button className="setting-submit-btn" onClick={this.handleSubmit}>Create</button>
                         </div>
                     </div>
-                    <div className="form-section"> {/* 移除 apperance-form 类 */}
+                    <div className="form-section"> 
                         <h2>Create new study</h2>
-                        <div> {/* 移除 theme-selector 类 */}
+                        <div> 
                             <label htmlFor="studyName">Study Name:</label>
                             <input
                                 type="text"
@@ -165,4 +165,5 @@ function withHook(Component) {
     };
 }
 
+export { withHook };
 export default withHook(Register);

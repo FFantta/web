@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: component/content/login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: component/content/login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import Base from './base';
+import './login.css';
+import '../../index.css';
+import {checkAdminCredentials} from '../../supabaseClient.js';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './authContext';
+
+/**
+ * This component acts as the login page which the user sees when they initially land on the website.
+ */
+class Login extends Component {
+    state = {
+        adminId: '',
+        password: '',
+        adminIdError: '',
+        passwordError: '',
+    };
+
+    /**
+     * Handles changes in the text fields and keep the associted variables updated.
+     * @param {Event} e - an event object
+     */
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value, [`${e.target.name}Error`]: '' });
+    };
+
+    /**
+     * Allows the user to log in to the webiste when valid credentials are entered.
+     * @param {Event} e - an event object.
+     * @returns - and error message if there is an issue with the input, otherwise it takes the user to the study home page.
+     */
+    handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (this.state.adminId.trim() === 0 || this.state.password.trim() === '') {
+            alert('Please provide both admin ID and password');
+            return;
+        }
+        const { adminId, password } = this.state;
+
+        try {
+            const loginSuccessful = await checkAdminCredentials(adminId, password);
+            if (loginSuccessful) {
+                // Open next page logic
+                this.props.auth.login(adminId);
+                this.props.navigate("/studyHome");
+            } else {
+                // Display error message
+                console.log("Login failed!");
+            }
+        } catch (error) {
+            // Errors that occurred
+            console.error("Error during login:", error);
+        }
+    };
+
+    render() {
+        const { adminId, password, adminIdError, passwordError } = this.state;
+        return (
+            &lt;Base>
+                &lt;div className="mainContainer">
+                    &lt;div className="titleContainer">Login&lt;/div>
+                    &lt;div className="inputContainer">
+                        &lt;input
+                            type="text"
+                            id="adminId"
+                            name="adminId"
+                            value={adminId}
+                            onChange={this.handleChange}
+                            placeholder="Admin ID"
+                            className="inputBox"
+                        />
+                        {adminIdError &amp;&amp; &lt;div className="errorLabel">{adminIdError}&lt;/div>}
+                    &lt;/div>
+                    &lt;div className="inputContainer">
+                        &lt;input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={password}
+                            onChange={this.handleChange}
+                            placeholder="Password"
+                            className="inputBox"
+                        />
+                        {passwordError &amp;&amp; &lt;div className="errorLabel">{passwordError}&lt;/div>}
+                    &lt;/div>
+                    &lt;div className="buttonContainer">
+                        &lt;button type="submit" className="login-submit-btn" onClick={this.handleSubmit}>Login&lt;/button>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/Base>
+        );
+    }
+}
+
+/**
+ * A function which wraps a component, allowing the navigate and auth variables to be included when it is exported/used.
+ * @param {Component} Component - the target component to be exported with hooks.
+ * @returns - the wrapped component with the navigate and auth varibales.
+ */
+function withHook(Component) {
+    return function WrappedComponent(props) {
+        const navigate = useNavigate();
+        const auth = useAuth(); 
+        return &lt;Component {...props} navigate={navigate} auth={auth} />;
+    };
+}
+
+export default withHook(Login);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Login.html">Login</a></li><li><a href="NotFound.html">NotFound</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Register.html">Register</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Base">Base</a></li><li><a href="global.html#Database">Database</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#ParticipantData">ParticipantData</a></li><li><a href="global.html#ParticipantWrapper">ParticipantWrapper</a></li><li><a href="global.html#ScatterChart">ScatterChart</a></li><li><a href="global.html#ScatterChart3D">ScatterChart3D</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#StudyDropdown">StudyDropdown</a></li><li><a href="global.html#StudyHome">StudyHome</a></li><li><a href="global.html#ThemeProvider">ThemeProvider</a></li><li><a href="global.html#addTag">addTag</a></li><li><a href="global.html#cascadeDeleteTag">cascadeDeleteTag</a></li><li><a href="global.html#changePassword">changePassword</a></li><li><a href="global.html#checkAdminCredentials">checkAdminCredentials</a></li><li><a href="global.html#checkDataTag">checkDataTag</a></li><li><a href="global.html#checkForAdminRole">checkForAdminRole</a></li><li><a href="global.html#checkStudyData">checkStudyData</a></li><li><a href="global.html#checkStudyExists">checkStudyExists</a></li><li><a href="global.html#checkTagExists">checkTagExists</a></li><li><a href="global.html#deleteTag">deleteTag</a></li><li><a href="global.html#getCurrentStudy">getCurrentStudy</a></li><li><a href="global.html#getParticipantData">getParticipantData</a></li><li><a href="global.html#getStudyData">getStudyData</a></li><li><a href="global.html#insertAdmin">insertAdmin</a></li><li><a href="global.html#insertStudy">insertStudy</a></li><li><a href="global.html#removeTaggedData">removeTaggedData</a></li><li><a href="global.html#renderDropdownStudies">renderDropdownStudies</a></li><li><a href="global.html#renderParticipantDatabase">renderParticipantDatabase</a></li><li><a href="global.html#renderSearchResults">renderSearchResults</a></li><li><a href="global.html#renderStudyDatabase">renderStudyDatabase</a></li><li><a href="global.html#renderTags">renderTags</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#setCurrentStudy">setCurrentStudy</a></li><li><a href="global.html#setSelectedParticipant">setSelectedParticipant</a></li><li><a href="global.html#tagData">tagData</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useTheme">useTheme</a></li><li><a href="global.html#withHook">withHook</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Apr 29 2024 13:07:13 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

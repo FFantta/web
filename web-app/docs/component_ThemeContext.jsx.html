@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: component/ThemeContext.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: component/ThemeContext.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { createContext, useState, useContext, useEffect } from 'react';
+
+const ThemeContext = createContext();
+
+/**
+ * This is used to manage the colour scheme and font size throughout the website.
+ * @param {props} children - the content to be wrapped in the theme provider. 
+ * @returns - the children wrapped in the theme provider.
+ */
+export const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState('dark');
+    const [fontSize, setFontSize] = useState('medium'); 
+
+    /**
+     * This switches between light mode and dark mode depending on the current theme.
+     */
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
+    /**
+     * This changes the font size throughout the program
+     * @param {number} size - the desired font size.
+     */
+    const changeFontSize = (size) => {
+        setFontSize(size);
+    };
+
+    useEffect(() => {
+        document.body.className = `${theme}-theme`;
+    }, [theme]);
+
+    useEffect(() => {
+        const root = document.documentElement; 
+        root.className = `${fontSize}-font`;
+        root.style.fontSize = fontSize === 'small' ? '12px' : fontSize === 'medium' ? '16px' : '24px'; 
+    }, [fontSize]);
+    
+
+    return (
+        &lt;ThemeContext.Provider value={{ theme, toggleTheme, fontSize, changeFontSize }}>
+            {children}
+        &lt;/ThemeContext.Provider>
+    );
+};
+
+/**
+ * A hook to access the theme context.
+ * @returns - the theme context.
+ */
+export const useTheme = () => useContext(ThemeContext);
+
+export default ThemeContext;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Login.html">Login</a></li><li><a href="NotFound.html">NotFound</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Register.html">Register</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#Base">Base</a></li><li><a href="global.html#Database">Database</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#ParticipantData">ParticipantData</a></li><li><a href="global.html#ParticipantWrapper">ParticipantWrapper</a></li><li><a href="global.html#ScatterChart">ScatterChart</a></li><li><a href="global.html#ScatterChart3D">ScatterChart3D</a></li><li><a href="global.html#SearchBar">SearchBar</a></li><li><a href="global.html#Setting">Setting</a></li><li><a href="global.html#StudyDropdown">StudyDropdown</a></li><li><a href="global.html#StudyHome">StudyHome</a></li><li><a href="global.html#ThemeProvider">ThemeProvider</a></li><li><a href="global.html#addTag">addTag</a></li><li><a href="global.html#cascadeDeleteTag">cascadeDeleteTag</a></li><li><a href="global.html#changePassword">changePassword</a></li><li><a href="global.html#checkAdminCredentials">checkAdminCredentials</a></li><li><a href="global.html#checkDataTag">checkDataTag</a></li><li><a href="global.html#checkForAdminRole">checkForAdminRole</a></li><li><a href="global.html#checkStudyData">checkStudyData</a></li><li><a href="global.html#checkStudyExists">checkStudyExists</a></li><li><a href="global.html#checkTagExists">checkTagExists</a></li><li><a href="global.html#deleteTag">deleteTag</a></li><li><a href="global.html#getCurrentStudy">getCurrentStudy</a></li><li><a href="global.html#getParticipantData">getParticipantData</a></li><li><a href="global.html#getStudyData">getStudyData</a></li><li><a href="global.html#insertAdmin">insertAdmin</a></li><li><a href="global.html#insertStudy">insertStudy</a></li><li><a href="global.html#removeTaggedData">removeTaggedData</a></li><li><a href="global.html#renderDropdownStudies">renderDropdownStudies</a></li><li><a href="global.html#renderParticipantDatabase">renderParticipantDatabase</a></li><li><a href="global.html#renderSearchResults">renderSearchResults</a></li><li><a href="global.html#renderStudyDatabase">renderStudyDatabase</a></li><li><a href="global.html#renderTags">renderTags</a></li><li><a href="global.html#root">root</a></li><li><a href="global.html#setCurrentStudy">setCurrentStudy</a></li><li><a href="global.html#setSelectedParticipant">setSelectedParticipant</a></li><li><a href="global.html#tagData">tagData</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useTheme">useTheme</a></li><li><a href="global.html#withHook">withHook</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Apr 29 2024 13:07:13 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

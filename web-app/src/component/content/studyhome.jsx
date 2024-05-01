@@ -76,7 +76,7 @@ const StudyHome = () => {
                 <div className='tableAndButtons'>
                     <Database currentStudy={currentStudy} />
                     <div className='home-buttons'>
-                        <button onClick={handleVisualise}>Visualise Data</button>
+                        <button onClick={handleVisualise}>2D Visualise Data</button>
                         {showPopup && (
                             <div className="popup">
                                 <ScatterChart currentStudy={currentStudy} />

@@ -30,7 +30,7 @@ const ScatterChart3D = ({ currentStudy, currentParticipant}) => {
           mode: 'markers',
           type: 'scatter3d',
           marker: {
-            size: 6,
+            size: 5,
             opacity: 0.6
           }
         };
@@ -43,14 +43,14 @@ const ScatterChart3D = ({ currentStudy, currentParticipant}) => {
   
   const layout = {
     autosize: true,
-    title: '3D Scatter Chart',
+    title: '3D Data Scatter Chart',
     scene: {
       xaxis: { title: 'X Coordinate', range: [-100, 100] },
       yaxis: { title: 'Y Coordinate', range: [-100, 100] },
       zaxis: { 
         title: 'Time', 
         type: 'date', 
-        range: ['2024-02-01', '2024-04-01'] 
+        range: ['2024-02-01', '2024-06-01'] 
       },
       camera: {
         eye: { x: 1.5, y: 1.5, z: 1.5 },

@@ -32,12 +32,12 @@ class Login extends Component {
      */
     handleSubmit = async (e) => {
         e.preventDefault();
+        const { adminId, password } = this.state;
 
-        if (this.state.adminId.trim() === 0 || this.state.password.trim() === '') {
-            alert('Please provide both admin ID and password');
+        if (adminId.trim() === '' || password.trim() === '') {
+            this.setState({ passwordError: 'Please provide both admin ID and password' });
             return;
         }
-        const { adminId, password } = this.state;
 
         try {
             const loginSuccessful = await checkAdminCredentials(adminId, password);
@@ -46,12 +46,12 @@ class Login extends Component {
                 this.props.auth.login(adminId);
                 this.props.navigate("/studyHome");
             } else {
-                // Display error message
-                console.log("Login failed!");
+                // Display error message for incorrect credentials
+                this.setState({ passwordError: 'Incorrect admin ID or password' });
             }
         } catch (error) {
-            // Errors that occurred
             console.error("Error during login:", error);
+            this.setState({ passwordError: 'An error occurred during login. Please try again.' });
         }
     };
 

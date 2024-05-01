@@ -54,14 +54,14 @@ const ScatterChart = ({ currentStudy, currentParticipant }) => {
 
   const options = {
     autoSize: true,
-    title: { text: 'Participant Coordinates' },
+    title: { text: '2D Data Scatter Chart' },
     series: [
       {
         type: 'scatter',
         data: chartData,
         xKey: 'x',
         yKey: 'y',
-        labelKey: 'name',
+        labelKey: 'tag',
         marker: {
           size: 8,
           fill: '#0050b3',

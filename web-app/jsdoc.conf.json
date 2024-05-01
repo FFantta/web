@@ -1,0 +1,18 @@
+{
+    "source": {
+      "include": ["src"], 
+      "includePattern": ".+\\.jsx?$" 
+    },
+    "plugins": ["plugins/markdown"], 
+    "opts": {
+      "recurse": true,
+      "destination": "docs"
+    },
+    "templates": {
+      "cleverLinks": false,
+      "monospaceLinks": false
+    },
+    "scripts": {
+        "docs": "jsdoc -c jsdoc.conf.json"
+    }
+  }
